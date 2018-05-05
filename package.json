@@ -9,7 +9,7 @@
     "clean": "rimraf artifacts",
     "build": "npm run clean && npm run tsc --",
     "watch": "npm run build -- -w",
-    "start:android": "npm run build && concurrently -r 'npm run watch' 'react-native run-android'"
+    "start:android": "npm run build && concurrently -r 'npm run tsc --' 'npm run watch' 'react-native run-android'"
   },
   "dependencies": {
     "react": "16.3.1",
