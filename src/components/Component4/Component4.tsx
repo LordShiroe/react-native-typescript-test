@@ -1,14 +1,8 @@
 import React, { Component } from 'react'
-import { Text, View, AppRegistry, ListView, ListViewDataSource, StyleSheet } from 'react-native'
+import { Text, View, AppRegistry, ListView, ListViewDataSource, StyleSheet, TouchableHighlight } from 'react-native'
+import StackNavigation from 'interfaces/NavigationProps'
 
-const users = [
-    { name: 'Andrea' },
-    { name: 'Freddy' },
-    { name: 'Guillen' },
-    { name: 'Carlos' }
-]
-
-interface Props { }
+interface Props { navigation: StackNavigation }
 interface State { userDataSource: ListViewDataSource }
 export default class Component4 extends Component<Props, State> {
 
@@ -16,16 +10,35 @@ export default class Component4 extends Component<Props, State> {
         super(props)
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
         this.state = {
-            userDataSource: ds.cloneWithRows(users)
+            userDataSource: ds
         }
     }
 
+    componentDidMount() {
+        this.fetchUsers()
+    }
+
+    fetchUsers() {
+        fetch('https://jsonplaceholder.typicode.com/users').then(res => res.json())
+            .then(res => {
+                console.log(res)
+                this.setState({
+                    userDataSource: this.state.userDataSource.cloneWithRows(res)
+                })
+            })
+    }
+
+    onPress(user) {
+        this.props.navigation.navigate('Details', { user: user })
+    }
+
     renderRow(user) {
-        console.log(this.state)
         return (
-            <View style={styles.row}>
-                <Text style={styles.rowText}>{user.name}</Text>
-            </View>)
+            <TouchableHighlight onPress={() => this.onPress(user)}>
+                <View style={styles.row}>
+                    <Text style={styles.rowText}>{user.name}: {user.email}</Text>
+                </View>
+            </TouchableHighlight>)
     }
 
     render() {

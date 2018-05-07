@@ -13,7 +13,16 @@
         "sourceMap": true,
         "noImplicitReturns": true,
         "noUnusedParameters": true,
-        "noUnusedLocals": true
+        "noUnusedLocals": true,
+        "baseUrl": "src",
+        "paths": {
+            "interfaces/*": [
+                "interfaces/*"
+            ],
+            "theme/*": [
+                "theme/*"
+            ]
+        }
     },
     "filesGlob": [
         "typings/index.d.ts",
