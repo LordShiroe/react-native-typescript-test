@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
-import { AppRegistry, Text, View, TextInput, Switch } from 'react-native'
+import { Text, View, TextInput, Switch } from 'react-native'
+import { connect } from 'react-redux'
+import { updateColor } from 'actions/uiActions'
 
-interface Props { message: string }
+interface Props { message: string, color: string, changeColor: ((color: string) => void) }
 interface State { textValue: string, switchValue: boolean }
 
-export default class Component3 extends Component<Props, State> {
+class Component3 extends Component<Props, State> {
     constructor(props) {
         super(props)
+        console.log(this.props)
         this.state = {
-            textValue: 'hola',
-            switchValue: false
+            switchValue: this.props.color === '#f4f4f4' ? true : false,
+            textValue: 'hola'
         }
     }
     onChangeText(value) {
@@ -18,8 +21,10 @@ export default class Component3 extends Component<Props, State> {
     onSubmit() {
         console.log('Input Submitted')
     }
-    onSwitchChange(value) {
+    onSwitchChange(value: boolean) {
         this.setState({ switchValue: value })
+        const color = value ? '#f4f4f4' : '#acd123'
+        this.props.changeColor(color)
     }
     render() {
         return (
@@ -38,4 +43,18 @@ export default class Component3 extends Component<Props, State> {
     }
 }
 
-AppRegistry.registerComponent('Component3', () => Component3)
+const mapStateToProps = (state) => {
+    return {
+        color: state.ui.color
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        changeColor: (color: string) => {
+            dispatch(updateColor(color))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Component3)

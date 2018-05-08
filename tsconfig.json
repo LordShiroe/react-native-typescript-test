@@ -21,6 +21,9 @@
             ],
             "theme/*": [
                 "theme/*"
+            ],
+            "actions/*": [
+                "redux/actions/*"
             ]
         }
     },

@@ -5,7 +5,9 @@ import {
   View
 } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
+import { Provider } from 'react-redux'
 
+import { store } from './artifacts/redux/store'
 import Component1 from './artifacts/components/Component1/Component1'
 import Component2 from './artifacts/components/Component2/Component2'
 import Component3 from './artifacts/components/Component3/Component3'
@@ -29,9 +31,11 @@ const RootStack = createStackNavigator(
 
 export default class App extends Component {
   render() {
-    console.log("hello from app");
+    console.log(store.getState())
     return (
-      <RootStack />
+      <Provider store={store}>
+        <RootStack />
+      </Provider>
     );
   }
 }

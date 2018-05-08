@@ -16,8 +16,9 @@
           "./artifacts"
         ],
         "alias": {
-          "interfaces": "./src/interfaces",
-          "theme": "./artifacts/theme"
+          "interfaces": "./artifacts/interfaces",
+          "theme": "./artifacts/theme",
+          "actions": "./artifacts/redux/actions"
         }
       }
     ]
